@@ -56,4 +56,15 @@ struct Plane
 		
 		return Vec3r(cross.x / dist, cross.y / dist, cross.z / dist);
 	}
+
+	string toString()
+	{
+		import std.array : join;
+
+		string[] outputArr;
+		foreach (val; points)
+			outputArr ~= val.toString();
+
+		return "(" ~ outputArr.join(") (") ~ ")";
+	}
 }
