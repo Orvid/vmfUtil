@@ -18,7 +18,7 @@
     <UnittestMode>false</UnittestMode>
     <Externalconsole>true</Externalconsole>
     <Target>Executable</Target>
-    <OutputName>vmfRounder</OutputName>
+    <OutputName>vmfUtil</OutputName>
     <Commandlineparameters>"F:\Games\Steam\SteamApps\common\Team Fortress 2\tf\download\maps\ctf_minepirates_a4_d.vmf"</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -29,7 +29,7 @@
     <UnittestMode>false</UnittestMode>
     <Externalconsole>true</Externalconsole>
     <Target>Executable</Target>
-    <OutputName>vmfRounder</OutputName>
+    <OutputName>vmfUtil</OutputName>
     <ExtraCompilerArguments>-g</ExtraCompilerArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Unittest|AnyCPU' ">
@@ -41,7 +41,7 @@
     <UnittestMode>true</UnittestMode>
     <Externalconsole>true</Externalconsole>
     <Target>Executable</Target>
-    <OutputName>vmfRounder</OutputName>
+    <OutputName>vmfUtil</OutputName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug - New Features|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,7 +52,7 @@
     <ObjectsDirectory>obj\Debug</ObjectsDirectory>
     <Commandlineparameters>"F:\Games\Steam\SteamApps\common\Team Fortress 2\tf\download\maps\cp_orange_twin_towers.vmf"</Commandlineparameters>
     <Externalconsole>true</Externalconsole>
-    <OutputName>vmfRounder</OutputName>
+    <OutputName>vmfUtil</OutputName>
     <Target>Executable</Target>
   </PropertyGroup>
   <ItemGroup>

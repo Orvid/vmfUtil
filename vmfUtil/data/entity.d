@@ -9,12 +9,14 @@ class Entity
 	string name;
 	string[string] properties;
 	Entity[] children;
+	Entity parent;
 
 	auto copyFrom(Entity e)
 	{
 		this.name = e.name;
 		this.properties = e.properties;
 		this.children = e.children;
+		this.parent = e.parent;
 		return this;
 	}
 

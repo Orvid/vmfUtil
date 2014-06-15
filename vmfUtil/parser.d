@@ -72,7 +72,11 @@ Entity parseEntity(ref string str)
 			return ent;
 		}
 		else if (isIdentifier(str[0]))
-			ent.children ~= parseEntity(str);
+		{
+			auto ch = parseEntity(str);
+			ch.parent = ent;
+			ent.children ~= ch;
+		}
 		else
 			throw new Exception("Unexpected character!");
 	}
