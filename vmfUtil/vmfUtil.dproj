@@ -19,7 +19,7 @@
     <Externalconsole>true</Externalconsole>
     <Target>Executable</Target>
     <OutputName>vmfUtil</OutputName>
-    <Commandlineparameters>"F:\Games\Steam\SteamApps\common\Team Fortress 2\tf\download\maps\ctf_minepirates_a4_d.vmf"</Commandlineparameters>
+    <Commandlineparameters>--mode=manifest cp_freefall.vmf</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release</OutputPath>
@@ -63,6 +63,7 @@
     <Compile Include="data\vec3r.d" />
     <Compile Include="data\entity.d" />
     <Compile Include="data\camera.d" />
+    <Compile Include="data\portal.d" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

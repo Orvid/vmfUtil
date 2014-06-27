@@ -1,5 +1,6 @@
 ﻿module parser;
 
+import data.portal : Portal, PortalEnvironment;
 import data.entity : Entity, registeredEntityTypes;
 import indentedstreamwriter : IndentedStreamWriter;
 
@@ -20,6 +21,55 @@ Entity[] parse(string str)
 	}
 
 	return parsedEntities;
+}
+
+
+PortalEnvironment parsePortals(string str)
+{
+	import data.vec3r : Vec3r;
+
+	if (str[0..4] != "PRT1")
+		throw new Exception("Invalid portal file!");
+	str = str[4..$];
+	consumeWhitespace(str);
+
+	size_t clusterCount = parseUnsignedInteger(str);
+	consumeWhitespace(str);
+
+	size_t portalCount = parseUnsignedInteger(str);
+	consumeWhitespace(str);
+
+	Portal[] portals = new Portal[portalCount];
+	foreach (i; 0..portalCount)
+	{
+		size_t pointCount = parseUnsignedInteger(str);
+		consumeWhitespace(str);
+
+		size_t clusterA = parseUnsignedInteger(str);
+		consumeWhitespace(str);
+
+		size_t clusterB = parseUnsignedInteger(str);
+		consumeWhitespace(str);
+		
+		Vec3r[] parsed = new Vec3r[pointCount];
+		foreach (i2; 0..pointCount)
+		{
+			if (str[0] != '(')
+				throw new Exception("Expected '('!");
+			str = str[1..$];
+
+			size_t i3 = 0;
+			while (str[i3] != ')')
+				i3++;
+			parsed[i2] = Vec3r.parse(str[0..i3 - 1]);
+			str = str[i3 + 2..$];
+		}
+
+		portals[i] = Portal(parsed, clusterA, clusterB);
+		consumeWhitespace(str);
+	}
+
+	return PortalEnvironment(clusterCount, portals);
 }
 
 private:
@@ -119,4 +169,29 @@ void consumeWhitespace(ref string str)
 		default:
 			return false;
 	}
+}
+
+size_t parseUnsignedInteger(ref string str)
+{
+	import std.conv : to;
+
+	size_t i = 0;
+	while (i < str.length)
+	{
+		switch (str[i])
+		{
+			case '0': .. case '9':
+				i++;
+				goto Continue;
+			default:
+				goto Break;
+		}
+	Break:
+		break;
+	Continue:
+		continue;
+	}
+	size_t ret = str[0..i].to!size_t();
+	str = str[i..$];
+	return ret;
 }

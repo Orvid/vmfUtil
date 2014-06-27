@@ -43,15 +43,8 @@ struct Plane
 		import std.math : sqrt;
 		
 		alias p = points;
-		
-		Vec3r d1 = Vec3r(p[1].x - p[0].x, p[1].y - p[0].y, p[1].z - p[0].z);
-		Vec3r d2 = Vec3r(p[2].x - p[1].x, p[2].y - p[1].y, p[2].z - p[1].z);
-		
-		Vec3r cross = Vec3r(
-			d1.y * d2.z - d1.z * d2.y,
-			d1.z * d2.x - d1.x * d2.z,
-			d1.x * d2.y - d1.y * d2.x
-		);
+				
+		Vec3r cross = (p[1] - p[0]).cross(p[2] - p[1]);
 		real dist = sqrt(cross.x ^^ 2 + cross.y ^^ 2 + cross.z ^^ 2);
 		
 		return Vec3r(cross.x / dist, cross.y / dist, cross.z / dist);
