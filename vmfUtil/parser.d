@@ -1,10 +1,10 @@
 ﻿module parser;
 
 import data.portal : Portal, PortalEnvironment;
-import data.entity : Entity, registeredEntityTypes;
-import indentedstreamwriter : IndentedStreamWriter;
+import data.entity : Entity, EntityTreeEnvironment, registeredEntityTypes;
+import utils.indentedstreamwriter : IndentedStreamWriter;
 
-Entity[] parse(string str)
+EntityTreeEnvironment parse(string str)
 {
 	Entity[] parsedEntities;
 
@@ -20,7 +20,7 @@ Entity[] parse(string str)
 		consumeWhitespace(str);
 	}
 
-	return parsedEntities;
+	return new EntityTreeEnvironment(parsedEntities);
 }
 
 
@@ -69,7 +69,7 @@ PortalEnvironment parsePortals(string str)
 		consumeWhitespace(str);
 	}
 
-	return PortalEnvironment(clusterCount, portals);
+	return new PortalEnvironment(clusterCount, portals);
 }
 
 private:

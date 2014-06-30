@@ -19,7 +19,7 @@
     <Externalconsole>true</Externalconsole>
     <Target>Executable</Target>
     <OutputName>vmfUtil</OutputName>
-    <Commandlineparameters>--mode=manifest cp_freefall.vmf</Commandlineparameters>
+    <Commandlineparameters>--out=cp_croissant_final_d.cleaned.vmf cp_croissant_final_d.vmf</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release</OutputPath>
@@ -43,29 +43,27 @@
     <Target>Executable</Target>
     <OutputName>vmfUtil</OutputName>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug - New Features|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug</OutputPath>
-    <LinkinThirdPartyLibraries>false</LinkinThirdPartyLibraries>
-    <UnittestMode>false</UnittestMode>
-    <DebugLevel>0</DebugLevel>
-    <ObjectsDirectory>obj\Debug</ObjectsDirectory>
-    <Commandlineparameters>"F:\Games\Steam\SteamApps\common\Team Fortress 2\tf\download\maps\cp_orange_twin_towers.vmf"</Commandlineparameters>
-    <Externalconsole>true</Externalconsole>
-    <OutputName>vmfUtil</OutputName>
-    <Target>Executable</Target>
-  </PropertyGroup>
   <ItemGroup>
     <Compile Include="main.d" />
     <Compile Include="parser.d" />
-    <Compile Include="indentedstreamwriter.d" />
     <Compile Include="data\plane.d" />
     <Compile Include="data\vec3r.d" />
     <Compile Include="data\entity.d" />
     <Compile Include="data\camera.d" />
     <Compile Include="data\portal.d" />
+    <Compile Include="utils\formattedexception.d" />
+    <Compile Include="utils\indentedstreamwriter.d" />
+    <Compile Include="modes\processmode.d" />
+    <Compile Include="data\parsedenvironment.d" />
+    <Compile Include="modes\portalsmode.d" />
+    <Compile Include="modes\entitytreemode.d" />
+    <Compile Include="modes\cleanmode.d" />
+    <Compile Include="modes\manifestmode.d" />
+    <Compile Include="modes\visleafmode.d" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
+    <Folder Include="utils\" />
+    <Folder Include="modes\" />
   </ItemGroup>
 </Project>

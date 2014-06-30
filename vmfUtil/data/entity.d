@@ -1,6 +1,7 @@
 ﻿module data.entity;
 
-import indentedstreamwriter : IndentedStreamWriter;
+import data.parsedenvironment : ParsedEnvironment;
+import utils.indentedstreamwriter : IndentedStreamWriter;
 
 __gshared Entity function(Entity)[string] registeredEntityTypes;
 
@@ -63,6 +64,34 @@ class Entity
 		
 		wtr.indent--;
 		wtr.writeLine("}");
+	}
+}
+
+final class EntityTreeEnvironment : ParsedEnvironment
+{
+	Entity[] rootEntities;
+
+	this(Entity[] rootEntities)
+	{
+		this.rootEntities = rootEntities;
+	}
+
+	void deepIter(void delegate(Entity e) func)
+	{
+		static void innerDeepIter(Entity ent, void delegate(Entity e) func)
+		{
+			func(ent);
+			foreach(e; ent.children)
+				innerDeepIter(e, func);
+		}
+		foreach (ent; rootEntities)
+			innerDeepIter(ent, func);
+	}
+
+	override void write(IndentedStreamWriter wtr)
+	{
+		foreach (e; rootEntities)
+			e.write(wtr);
 	}
 }
 

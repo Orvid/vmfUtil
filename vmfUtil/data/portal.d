@@ -1,5 +1,6 @@
 ﻿module data.portal;
 
+import data.parsedenvironment : ParsedEnvironment;
 import data.vec3r : Vec3r;
 
 struct Portal
@@ -42,18 +43,24 @@ struct Portal
 		foreach (val; points)
 			outputArr ~= val.toString();
 		
-		return format("%s %s %s (%s )", points.length, clusterA, clusterB, outputArr.join(" ) ("));
+		return format("%s %s %s (%s ) ", points.length, clusterA, clusterB, outputArr.join(" ) ("));
 	}
 }
 
-struct PortalEnvironment
+final class PortalEnvironment : ParsedEnvironment
 {
-	import indentedstreamwriter : IndentedStreamWriter;
+	import utils.indentedstreamwriter : IndentedStreamWriter;
 
 	size_t clusterCount;
 	Portal[] portals;
 
-	void write(IndentedStreamWriter wtr)
+	this(size_t clusterCount, Portal[] portals)
+	{
+		this.clusterCount = clusterCount;
+		this.portals = portals;
+	}
+
+	override void write(IndentedStreamWriter wtr)
 	{
 		wtr.writeLine("PRT1");
 		wtr.writeLine("%s", clusterCount);

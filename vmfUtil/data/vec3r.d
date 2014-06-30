@@ -1,7 +1,11 @@
 ﻿module data.vec3r;
 
+import utils.formattedexception : FormattedException;
+
 struct Vec3r
 {
+	//__gshared immutable zero = Vec3r(0, 0, 0);
+
 	real x, y, z;
 
 	this(real x, real y, real z)
@@ -47,6 +51,14 @@ struct Vec3r
 	}
 	
 	Vec3r cross()(auto ref const Vec3r d2) inout
+//	out (result)
+//	{
+//		if (!(result.x || result.y || result.z))
+//			throw new FormattedException("(%s * %s) - (%s * %s), (%s * %s) - (%s * %s), (%s * %s) - (%s * %s)", this.y, d2.z, this.z, d2.y, this.z, d2.x, this.x, d2.z, this.x, d2.y, this.y, d2.x);
+//
+//		assert(result.x || result.y || result.z);
+//	}
+	body
 	{
 		return Vec3r(
 			this.y * d2.z - this.z * d2.y,
@@ -76,7 +88,7 @@ struct Vec3r
 		mixin("return Vec3r(this.x " ~ op ~ " v2.x, this.y " ~ op ~ " v2.y, this.z " ~ op ~ " v2.z);");
 	}
 
-	bool counterClockwiseFrom(ref const Vec3r other, ref const Vec3r center, int form)
+	bool counterClockwiseFrom(ref const Vec3r other, ref const Vec3r center, int form, ref const Vec3r normal)
 	{
 		// Unfortunately, while the simple 3d computation works fine with 
 		// point pairs that are not perpindicular to a coordinate axis, it
@@ -148,8 +160,7 @@ struct Vec3r
 		}
 		else
 		{
-			//throw new Exception("There are many issues with this version, hopefully it's not actually getting called.");
-			return (this - center).cross(other - center).dot(center) < 0;
+			return (this - center).cross(other - center).dot(normal) < 0;
 		}
 	}
 	

@@ -1,4 +1,4 @@
-﻿module indentedstreamwriter;
+﻿module utils.indentedstreamwriter;
 
 private import std.file : exists, mkdirRecurse;
 private import std.path : dirName;
@@ -28,6 +28,7 @@ public:
 	}
 	
 	@property auto ref int indent() { return mIndent; }
+	@property ulong length() { return this.mInnerFile.size; }
 	
 	void close()
 	{
