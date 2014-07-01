@@ -8,6 +8,13 @@ struct Vec3r
 
 	real x, y, z;
 
+	@property bool isNormal() const
+	{
+		import std.math : isNormal;
+
+		return x.isNormal || y.isNormal || z.isNormal;
+	}
+
 	this(real x, real y, real z)
 	{
 		this.x = x;
@@ -51,14 +58,6 @@ struct Vec3r
 	}
 	
 	Vec3r cross()(auto ref const Vec3r d2) inout
-//	out (result)
-//	{
-//		if (!(result.x || result.y || result.z))
-//			throw new FormattedException("(%s * %s) - (%s * %s), (%s * %s) - (%s * %s), (%s * %s) - (%s * %s)", this.y, d2.z, this.z, d2.y, this.z, d2.x, this.x, d2.z, this.x, d2.y, this.y, d2.x);
-//
-//		assert(result.x || result.y || result.z);
-//	}
-	body
 	{
 		return Vec3r(
 			this.y * d2.z - this.z * d2.y,
@@ -76,6 +75,13 @@ struct Vec3r
 		;
 	}
 
+	real vectorLength() inout
+	{
+		import std.math : sqrt;
+
+		return sqrt(this.x ^^ 2 + this.y ^^ 2 + this.z ^^ 2);
+	}
+
 
 	Vec3r opOpAssign(string op)(auto ref const Vec3r v2)
 	{
@@ -83,7 +89,7 @@ struct Vec3r
 	}
 
 	Vec3r opBinary(string op)(auto ref const Vec3r v2) inout
-		if (op == "-" || op == "+" || op == "*")
+		if (op == "-" || op == "+")
 	{
 		mixin("return Vec3r(this.x " ~ op ~ " v2.x, this.y " ~ op ~ " v2.y, this.z " ~ op ~ " v2.z);");
 	}
@@ -169,7 +175,7 @@ struct Vec3r
 		// This is written in this style to 
 		// encourage the compiler to use cmovcc
 		// instructions rather than branches.
-		int ret;
+		int ret = void;
 		
 		if (this.x > b.x)
 			ret = 1;

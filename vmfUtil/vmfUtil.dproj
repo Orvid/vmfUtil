@@ -19,7 +19,7 @@
     <Externalconsole>true</Externalconsole>
     <Target>Executable</Target>
     <OutputName>vmfUtil</OutputName>
-    <Commandlineparameters>--out=cp_croissant_final_d.cleaned.vmf cp_croissant_final_d.vmf</Commandlineparameters>
+    <Commandlineparameters>--mode=writeback --out=cp_croissant_final_d.cleaned.vmf cp_croissant_final_d.vmf</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release</OutputPath>
@@ -31,17 +31,7 @@
     <Target>Executable</Target>
     <OutputName>vmfUtil</OutputName>
     <ExtraCompilerArguments>-g</ExtraCompilerArguments>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Unittest|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Unittest</OutputPath>
-    <LinkinThirdPartyLibraries>false</LinkinThirdPartyLibraries>
-    <ObjectsDirectory>obj\Unittest</ObjectsDirectory>
-    <DebugLevel>0</DebugLevel>
-    <UnittestMode>true</UnittestMode>
-    <Externalconsole>true</Externalconsole>
-    <Target>Executable</Target>
-    <OutputName>vmfUtil</OutputName>
+    <Commandlineparameters>--out=cp_croissant_final_d.cleaned.vmf cp_croissant_final_d.vmf</Commandlineparameters>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="main.d" />
@@ -60,6 +50,11 @@
     <Compile Include="modes\cleanmode.d" />
     <Compile Include="modes\manifestmode.d" />
     <Compile Include="modes\visleafmode.d" />
+    <Compile Include="modes\writebackmode.d" />
+    <Compile Include="data\solid.d" />
+    <Compile Include="data\side.d" />
+    <Compile Include="data\textureaxis.d" />
+    <Compile Include="data\connection.d" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

@@ -1,7 +1,8 @@
 ﻿module parser;
 
-import data.portal : Portal, PortalEnvironment;
+import data.connection : Connection;
 import data.entity : Entity, EntityTreeEnvironment, registeredEntityTypes;
+import data.portal : Portal, PortalEnvironment;
 import utils.indentedstreamwriter : IndentedStreamWriter;
 
 EntityTreeEnvironment parse(string str)
@@ -109,7 +110,14 @@ Entity parseEntity(ref string str)
 
 			while (i < str.length && str[i] != '"')
 				i++;
-			ent.properties[propName] = str[0..i];
+			if (ent.name == "connections")
+				ent.connections ~= Connection(propName, str[0..i]);
+			else
+			{
+				if (propName in ent.properties)
+					throw new Exception("Duplicate property encountered!");
+				ent.properties[propName] = str[0..i];
+			}
 			str = str[i + 1..$];
 			i = 0;
 		}
@@ -124,8 +132,14 @@ Entity parseEntity(ref string str)
 		else if (isIdentifier(str[0]))
 		{
 			auto ch = parseEntity(str);
-			ch.parent = ent;
-			ent.children ~= ch;
+
+			if (ch.name == "connections")
+				ent.connections = ch.connections;
+			else
+			{
+				ch.parent = ent;
+				ent.children ~= ch;
+			}
 		}
 		else
 			throw new Exception("Unexpected character!");

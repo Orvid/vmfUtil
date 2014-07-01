@@ -52,9 +52,9 @@ final class PortalsProcessMode : ProcessMode
 							// Leave the common points in 1 of the 2 pieces of the union
 							//working.points
 							p.points
-								.setUnion(working.points.filter!(b => p.points.countUntil!(pB => b == pB) == -1))
-								.array
-								;
+							.setUnion(working.points.filter!(b => p.points.countUntil!(pB => b == pB) == -1))
+							.array
+						;
 						if (workingPoints.length <= 2)
 							throw new Exception("Something has gone wrong! A portal should have at least 3 points!");
 						
@@ -65,7 +65,7 @@ final class PortalsProcessMode : ProcessMode
 							workingPoints.map!(p => p.x).sum / workingPoints.length,
 							workingPoints.map!(p => p.y).sum / workingPoints.length,
 							workingPoints.map!(p => p.z).sum / workingPoints.length
-							);
+						);
 						int form = 0;
 						Vec3r normal = void; // Only initialize if form stays 0 (probably a bad idea)
 						//						if (workingPoints.all!(p => p.x == workingPoints[0].x))

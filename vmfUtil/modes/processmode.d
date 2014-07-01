@@ -42,11 +42,18 @@ protected:
 		
 		throw new Exception(format(msg, args), file, line);
 	}
-
+	
+	static void warning(ARGS...)(string msg, ARGS args)
+	{
+		import std.stdio : writefln;
+		
+		writefln(msg, args);
+	}
+	
 	static void info(ARGS...)(string msg, ARGS args)
 	{
 		import std.stdio : writefln;
-
+		
 		writefln(msg, args);
 	}
 

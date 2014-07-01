@@ -63,7 +63,7 @@ public:
 		else
 			mInnerFile.write(message);
 		
-		debug flush();
+		//debug flush();
 	}
 	
 	void writeLine()()
@@ -72,7 +72,7 @@ public:
 		mInnerFile.writeln();
 		mCurrentLineIndented = false;
 
-		debug flush();
+		//debug flush();
 	}
 	
 	void writeLine(Char, A...)(in Char[] message, A args)
@@ -84,7 +84,7 @@ public:
 			mInnerFile.writeln(message);
 		mCurrentLineIndented = false;
 		
-		debug flush();
+		//debug flush();
 	}
 	
 }
