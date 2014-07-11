@@ -94,6 +94,12 @@ struct Vec3r
 		mixin("return Vec3r(this.x " ~ op ~ " v2.x, this.y " ~ op ~ " v2.y, this.z " ~ op ~ " v2.z);");
 	}
 
+	Vec3r opBinary(string op)(auto ref const real val) inout
+		if (op == "*" || op == "/")
+	{
+		mixin("return Vec3r(this.x " ~ op ~ " val, this.y " ~ op ~ " val, this.z " ~ op ~ " val);");
+	}
+
 	bool counterClockwiseFrom(ref const Vec3r other, ref const Vec3r center, int form, ref const Vec3r normal)
 	{
 		// Unfortunately, while the simple 3d computation works fine with 
@@ -204,7 +210,10 @@ struct Vec3r
 	string toString()
 	{
 		import std.string : format;
-		
-		return format("%s %s %s", x, y, z);
+
+		// TODO: scientific notation is written weird by hammer, and
+		//       pads 3 digits before the power of the exponent. This
+		//       currently only pads 2.
+		return format("%g %g %g", x, y, z);
 	}
 }

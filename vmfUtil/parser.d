@@ -115,7 +115,7 @@ Entity parseEntity(ref string str)
 			else
 			{
 				if (propName in ent.properties)
-					throw new Exception("Duplicate property encountered!");
+					throw new Exception("Duplicate property '" ~ propName ~ "' encountered!");
 				ent.properties[propName] = str[0..i];
 			}
 			str = str[i + 1..$];

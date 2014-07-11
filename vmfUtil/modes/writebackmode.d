@@ -13,7 +13,10 @@ final class WriteBackProcessMode : EntityTreeProcessMode
 	{
 //		if (e.name == "solid")
 //		{
-//			auto tmpEnt = new Solid(e).toEntity();
+//			auto sld = Solid(e);
+//			sld.buildVertexes();
+//			//sld.rebuildPlanes();
+//			auto tmpEnt = sld.toEntity();
 //			e.name = tmpEnt.name;
 //			e.children = tmpEnt.children;
 //			e.properties = tmpEnt.properties;

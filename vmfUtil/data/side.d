@@ -17,6 +17,7 @@ struct Side
 	real rotation;
 	size_t lightmapScale;
 	size_t smoothingGroups;
+	Entity displacementInfo;
 
 	Vec3r[] facePoints;
 
@@ -30,6 +31,30 @@ struct Side
 		this.rotation = e.rotation.to!real();
 		this.lightmapScale = e.lightmapscale.to!size_t();
 		this.smoothingGroups = e.smoothing_groups.to!size_t();
+		if (e.children.length)
+		{
+			if (e.children.length != 1)
+				throw new Exception("There are unknown children on the side of a brush!");
+			if (e.children[0].name != "dispinfo")
+				throw new Exception("The only child of a side should be a dispinfo entity!");
+			this.displacementInfo = e.children[0];
+		}
+	}
+
+	bool mergableWith()(auto ref const Side other) inout
+	{
+		real d1 = void, d2 = void;
+		Vec3r n1 = this.plane.normal(d1), n2 = other.plane.normal(d2);
+		return 
+			this.material == other.material &&
+			this.uaxis == other.uaxis &&
+			this.vaxis == other.vaxis &&
+			this.rotation == other.rotation &&
+			this.lightmapScale == other.lightmapScale &&
+			this.smoothingGroups == other.smoothingGroups &&
+			!this.displacementInfo && !other.displacementInfo &&
+			n1 == n2 && d1 == d2
+		;
 	}
 
 	void updatePlane()
@@ -80,6 +105,11 @@ struct Side
 		e.rotation = rotation.to!string();
 		e.lightmapscale = lightmapScale.to!string();
 		e.smoothing_groups = smoothingGroups.to!string();
+		if (displacementInfo)
+		{
+			e.children ~= displacementInfo;
+			displacementInfo.parent = e;
+		}
 		return e;
 	}
 }

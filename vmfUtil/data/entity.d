@@ -84,14 +84,16 @@ class Entity
 
 			bool solidChild = children.filter!(c => c.name == "solid").any;
 
-			if ("id" in properties)
-				wtr.writeLine(`"id" "%s"`, properties["id"]);
-			if ("classname" in properties)
-				wtr.writeLine(`"classname" "%s"`, properties["classname"]);
+			if (auto v = "id" in properties)
+				wtr.writeLine(`"id" "%s"`, *v);
+			if (auto v = "mapversion" in properties)
+				wtr.writeLine(`"mapversion" "%s"`, *v);
+			if (auto v = "classname" in properties)
+				wtr.writeLine(`"classname" "%s"`, *v);
 
 			foreach (k; properties.keys.sort!((a, b) => isKeyLessThan(a, b)))
 			{
-				if (k != "id" && k != "classname" && (solidChild || k != "origin"))
+				if (k != "id" && k != "mapversion" && k != "classname" && (solidChild || k != "origin"))
 					wtr.writeLine(`"%s" "%s"`, k, properties[k]);
 			}
 
@@ -217,16 +219,6 @@ shared static this()
 			"name",
 			"visgroupid",
 			"color",
-		],
-		"world": [
-			"id",
-			"mapversion",
-			"classname",
-			"comment",
-			"detailmaterial",
-			"detailvbsp",
-			"maxpropscreenwidth",
-			"skyname",
 		],
 	];
 }

@@ -19,7 +19,7 @@
     <Externalconsole>true</Externalconsole>
     <Target>Executable</Target>
     <OutputName>vmfUtil</OutputName>
-    <Commandlineparameters>--mode=writeback --out=cp_croissant_final_d.cleaned.vmf cp_croissant_final_d.vmf</Commandlineparameters>
+    <Commandlineparameters>--out=cp_croissant_final_d.cleaned.vmf cp_croissant_final_d.vmf</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release</OutputPath>

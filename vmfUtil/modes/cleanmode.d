@@ -1,7 +1,7 @@
 ﻿module modes.cleanmode;
 
 import data.camera : Camera;
-import data.entity : Entity;
+import data.entity : Entity, EntityTreeEnvironment;
 import data.plane : Plane;
 import data.solid : Solid;
 import data.vec3r : Vec3r;
@@ -19,19 +19,19 @@ final class CleanProcessMode : EntityTreeProcessMode
 	shared static this() { register!CleanProcessMode(); }
 	final override @property string name() { return "clean"; }
 
-	Solid[][Entity] solidGroups;
+	//Solid[][Entity] solidGroups;
 
 	override void processEntity(Entity e)
 	{		
 		switch (e.name)
 		{
-			case "solid":
-			{
-				if (!e.parent)
-					error("Somehow have a solid without a parent!");
-				solidGroups[e.parent] ~= Solid(e);
-				break;
-			}
+//			case "solid":
+//			{
+//				if (!e.parent)
+//					error("Somehow have a solid without a parent!");
+//				solidGroups[e.parent] ~= Solid(e);
+//				break;
+//			}
 			case "side":
 			{				
 				Plane p = e.plane.to!Plane;
@@ -176,6 +176,41 @@ final class CleanProcessMode : EntityTreeProcessMode
 			default:
 				break;
 		}
+	}
+
+	override void completeTreeProcessing(EntityTreeEnvironment env)
+	{
+//		import std.stdio;
+//
+//		size_t faceMergeCount = 0;
+//		foreach (parentEntity, ref solids; solidGroups)
+//		{
+//			if (parentEntity.name == "world")
+//			{
+//				foreach (ref baseSolid; solids)
+//				{
+//					foreach (ref comparedSolid; solids)
+//					{
+//						if (comparedSolid.id != baseSolid.id)
+//						{
+//							foreach (ref baseSide; baseSolid.sides)
+//							{
+//								foreach (ref cmpSide; comparedSolid.sides)
+//								{
+//									if (baseSide.mergableWith(cmpSide))
+//									{
+//										faceMergeCount++;
+//										//writeln("Want to merge ", baseSide, " and ", cmpSide);
+//									}
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//
+//		writeln("Be absurd: ", faceMergeCount);
 	}
 
 }

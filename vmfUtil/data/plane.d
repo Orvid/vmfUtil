@@ -43,8 +43,9 @@ struct Plane
 
 		return this;
 	}
-	
-	@property Vec3r normal()
+
+	// TODO: Make this @property again, it was removed because of an issue with DMD
+	Vec3r normal() inout
 	{
 		import std.math : sqrt;
 		
@@ -54,8 +55,39 @@ struct Plane
 		real dist = sqrt(cross.x ^^ 2 + cross.y ^^ 2 + cross.z ^^ 2);
 		//if (dist == 0)
 		//	throw new FormattedException("For points (%s) (%s) (%s), with a cross product of (%s) the square root of the sum of it's squared components is zero!", p[0], p[1], p[2], cross);
-		
+
 		return Vec3r(cross.x / dist, cross.y / dist, cross.z / dist);
+	}
+
+	Vec3r normal(out real distance) inout
+	{
+		import std.math : sqrt;
+		
+		alias p = points;
+		
+		Vec3r cross = (p[1] - p[0]).cross(p[2] - p[1]);
+		distance = sqrt(cross.x ^^ 2 + cross.y ^^ 2 + cross.z ^^ 2);
+		
+		return Vec3r(cross.x / distance, cross.y / distance, cross.z / distance);
+	}
+
+	static bool intersectionOf()(auto ref const Plane a, auto ref const Plane b, auto ref const Plane c, out Vec3r result)
+	{
+		real ad = void, bd = void, cd = void;
+		auto an = a.normal(ad), bn = b.normal(bd), cn = c.normal(cd);
+		real denom = an.dot(bn.cross(cn));
+
+		// Check if there really is an intersection
+		if (denom < real.epsilon) 
+			return false;
+
+		result = (
+			(bn.cross(cn) * ad) +
+			(cn.cross(an) * bd) +
+			(an.cross(bn) * cd)
+		) / -denom;
+
+		return true;
 	}
 
 	string toString()
